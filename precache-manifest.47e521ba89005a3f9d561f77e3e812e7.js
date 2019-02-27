@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/three-js-zoom/static/js/runtime~main.f3b0712f.js"
   },
   {
-    "revision": "e1ae8915bb57bf9d63ee",
-    "url": "/three-js-zoom/static/js/main.e1ae8915.chunk.js"
+    "revision": "266f7309811f0de7e1e1",
+    "url": "/three-js-zoom/static/js/main.266f7309.chunk.js"
   },
   {
     "revision": "72ac3a0425090bdf8f09",
     "url": "/three-js-zoom/static/js/2.72ac3a04.chunk.js"
   },
   {
-    "revision": "e1ae8915bb57bf9d63ee",
+    "revision": "266f7309811f0de7e1e1",
     "url": "/three-js-zoom/static/css/main.658ff4dd.chunk.css"
   },
   {
-    "revision": "4e95bc01f487d0dd3d7e4f2c233233fc",
+    "revision": "fabb872a5b75a5d17900b3eec401bbe1",
     "url": "/three-js-zoom/index.html"
   }
 ];
