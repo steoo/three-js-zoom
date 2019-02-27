@@ -68,7 +68,7 @@ class App extends Component {
     
     const loader = new FontLoader()
     
-    loader.load('/resources/fonts/helvetiker_regular.typeface.json', function (font) {
+    loader.load('resources/fonts/helvetiker_regular.typeface.json', function (font) {
       
       const hello = new TextGeometry('Hello three.js!', {
         font: font,
