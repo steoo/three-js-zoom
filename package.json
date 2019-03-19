@@ -6,9 +6,9 @@
   "dependencies": {
     "camera-controls": "https://github.com/steoo/camera-controls",
     "gh-pages": "^2.0.1",
-    "gsap": "^2.1.0",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
+    "gsap": "^2.1.2",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
     "react-scripts": "2.1.5",
     "three": "^0.101.1"
   },

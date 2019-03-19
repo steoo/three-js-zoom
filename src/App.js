@@ -5,7 +5,7 @@ import {
   WebGLRenderer,
   FontLoader,
   TextGeometry,
-  MeshPhongMaterial,
+  // MeshPhongMaterial,
   MeshBasicMaterial,
   Mesh
 } from "three"
@@ -22,23 +22,10 @@ class App extends Component {
     
     const scene = new Scene()
     const camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000)
-    camera.position.set(0, 0, 1200)
-    
-    // const controls = new OrbitControls(camera)
-    // const controls = new BetterOrbitControls(camera)
-    // controls.target.set(0, 0, 0)
-    // controls.update()
-    
-    
-    // const fpcontrols = new FirstPersonControls(camera)
-    // fpcontrols.lookSpeed = 0.0125
-    // fpcontrols.movementSpeed = 500
-    // fpcontrols.noFly = false
-    // fpcontrols.lookVertical = true
-    // fpcontrols.lookAt(scene.position)
-    
-    
-    // renderer.setSize(window.innerWidth, window.innerHeight)
+    // camera.position.set(0, 0, 1200)
+    camera.position.set(0, 0, 1500)
+    // camera.lookAt(new THREE.Vector3(0, 0, 0))
+    console.log(camera)
     
     const canvas = document.querySelector("#canvas__render")
     const desiredWidthInCSSPixels = window.innerWidth
@@ -56,17 +43,24 @@ class App extends Component {
     renderer.setClearColor(0xfffff0, 1)
     document.body.appendChild(canvas)
     
+    // const controls = new OrbitControls(camera)
+    // controls.target.set(0, 0, 0)
+    // controls.update()
+    
     const cameraControls = new CameraControls(camera, renderer.domElement, {
       keepMousedownListener: false,
       keepContextmenuListener: false,
       disableTouchRotation: true,
       disableThreeFingerTouchTruck: true,
-      disableTwoFingerTouchTruck: true,
+      disableTwoFingerTouchTruck: true
     })
     
-    cameraControls.maxDistance = 1200
+    cameraControls.maxDistance = 1500
     
     const loader = new FontLoader()
+    
+    let backYearMesh = null
+    let anotherMesh = null
     
     loader.load('resources/fonts/helvetiker_regular.typeface.json', function (font) {
       
@@ -79,13 +73,13 @@ class App extends Component {
       
       hello.center()
       
-      // const material = new MeshPhongMaterial({color: 0xff0000, transparent: true})
-      const material = new MeshBasicMaterial({color: 0xff0000, transparent: false})
-      // material.map.minFilter = THREE.LinearFilter;
+      let material = new MeshBasicMaterial({color: 0xff0000, transparent: true})
+      let material1 = new MeshBasicMaterial({color: 0xff0000, transparent: true})
+      let material2 = new MeshBasicMaterial({color: 0xff0000, transparent: true})
       
       const helloMesh = new Mesh(hello, material)
       
-      helloMesh.position.set(0, 0, 500)
+      helloMesh.position.set(0, 0, 1000)
       
       const back = new TextGeometry('Back Year', {
         font: font,
@@ -96,12 +90,29 @@ class App extends Component {
       
       back.center()
       
-      const backMesh = new Mesh(back, material)
+      backYearMesh = new Mesh(back, material1)
       
-      backMesh.position.set(0, 0, 0)
+      backYearMesh.position.set(0, 0, 500)
       
+      const another = new TextGeometry('another mesh', {
+        font: font,
+        size: 50,
+        height: 0,
+        curveSegments: 8
+      })
+      
+      another.center()
+      
+      anotherMesh = new Mesh(another, material2)
+      
+      anotherMesh.position.set(0, 0, 0)
+      
+      backYearMesh.material.opacity = 0
+      anotherMesh.material.opacity = 0
+      
+      scene.add(anotherMesh)
+      scene.add(backYearMesh)
       scene.add(helloMesh)
-      scene.add(backMesh)
       
     })
     // const ambientLight = new THREE.AmbientLight(0xffffff)
@@ -109,13 +120,32 @@ class App extends Component {
     
     const clock = new THREE.Clock()
     
+    
     render()
     
+    const delta = 600
+    let nearBackMesh = false
+    
     function render() {
-      const delta = clock.getDelta()
+      const clockDelta = clock.getDelta()
       requestAnimationFrame(render)
+      cameraControls.update(clockDelta)
       renderer.render(scene, camera)
-      cameraControls.update(delta)
+      
+      if (backYearMesh) {
+        const camZ = camera.position.z - delta
+        const diff = camZ < backYearMesh.position.z
+        if (diff) {
+          // const newOpacity = Math.floor(Math.abs(camZ - backYearMesh.position.z)) * 0.008
+          const newOpacity = Math.abs(camZ - backYearMesh.position.z) / 400
+          // console.log("near backyearmesh", Math.floor(Math.abs(camZ - backYearMesh.position.z)) * 0.001)
+          console.log("near backyearmesh", camZ - backYearMesh.position.z, newOpacity)
+          backYearMesh.material.opacity = newOpacity
+          // nearBackMesh = true
+        } else {
+          backYearMesh.material.opacity = 0
+        }
+      }
       // controls.update();
       // fpcontrols.update(delta)
     }
