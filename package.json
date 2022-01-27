@@ -10,7 +10,7 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.5",
-    "three": "^0.101.1"
+    "three": "^0.137.0"
   },
   "scripts": {
     "predeploy": "npm run build",
